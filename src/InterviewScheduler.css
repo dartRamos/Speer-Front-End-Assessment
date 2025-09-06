@@ -7,12 +7,12 @@
 .sidebar {
   width: 40%;
   padding: 1rem;
-  background-color: #FFDFDE;
+  background: linear-gradient(360deg, #FFBFBF, #FFDFDE);
 }
 
 .calendar-container {
   padding: 1rem;
-  background-color: #6A7BA2;
+  background: linear-gradient(to bottom, #6A7BA2, #4F5D7A);
   flex-grow: 1;
 }
 
@@ -25,7 +25,7 @@
 }
 
 .candidate-box, .engineer-box {
-  background-color: #6A7BA2;
+  background: linear-gradient(to bottom, #6A7BA2, #4F5D7A);
   padding: 1rem;
   border-radius: 0.5rem;
   box-shadow: 0 2px 4px rgba(0,0,0,1);
@@ -105,4 +105,12 @@
 
 .engineer-photo:hover {
   border: 2px solid white;
+}
+
+.booking-message {
+  color: #FFDFDE;
+  display: block;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: bold;
 }

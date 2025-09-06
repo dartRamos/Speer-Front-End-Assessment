@@ -85,6 +85,8 @@ const InterviewScheduler: React.FC = () => {
       { day: "Wed", time: "14:30" },
       { day: "Wed", time: "15:00" },
       { day: "Wed", time: "15:30" },
+      { day: "Thu", time: "11:00" },
+      { day: "Thu", time: "11:30" },
       { day: "Thu", time: "13:00" },
       { day: "Thu", time: "13:30" },
       { day: "Thu", time: "14:00" },
@@ -93,6 +95,12 @@ const InterviewScheduler: React.FC = () => {
       { day: "Fri", time: "15:00" },
     ],
   });
+  const [bookings, setBookings] = useState<{
+    candidateId: number;
+    engineer: User;
+    day: string;
+    time: string;
+  }[]>([]);
   
 
   const candidateAvailability: Record<number, TimeSlot[]> = {
@@ -172,12 +180,38 @@ const InterviewScheduler: React.FC = () => {
             ))}
           </select>
         </div>
-  
-        <div className="color-code-container">
-          <div><span className="color-box bg-green-300" /> Engineer Available</div>
-          <div><span className="color-box bg-[#00FFFF]" /> Matching Availability</div>
-          <div><span className="color-box bg-red-300" /> Candidate Available Only</div>
+
+        <div className="candidate-box">
+          <label>Confirmed Bookings</label>  
+          <div className="booking-message">
+              {selectedCandidate ? (
+                <>
+                  {bookings.filter(b => b.candidateId === selectedCandidate.id).length > 0 ? (
+                    <ul>
+                      {bookings
+                        .filter(b => b.candidateId === selectedCandidate.id)
+                        .map((b, index) => (
+                          <li key={index}>
+                            Interview booked for {b.day} {b.time} with {b.engineer.name}
+                          </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p>No interviews have been booked for this candidate.</p>
+                  )}
+                </>
+              ) : (
+                <p>Select a candidate to see booked interviews.</p>
+              )}
+            </div>
+          </div>
+
+          <div className="color-code-container">
+            <div><span className="color-box bg-green-300" /> Engineer Available</div>
+            <div><span className="color-box bg-[#00FFFF]" /> Matching Availability</div>
+            <div><span className="color-box bg-red-300" /> Candidate Available Only</div>
         </div>
+
       </div>
   
       {/* Calendar */}
@@ -188,8 +222,9 @@ const InterviewScheduler: React.FC = () => {
         engineerAvailability={engineerAvailability}
         setEngineerAvailability={setEngineerAvailability}
         hoveredEngineer={hoveredEngineer}
-        candidates={candidates}
         engineers={engineers}
+        setBookings={setBookings}
+        bookings={bookings}
       />
       </div>
     </div>

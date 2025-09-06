@@ -5,43 +5,127 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1000;
 }
 
 .modal {
-  background: white;
+  position: relative;
+  background: linear-gradient(360deg, #FFBFBF, #FFDFDE);
   border-radius: 12px;
-  padding: 20px;
   width: 400px;
   max-width: 90%;
+  padding: 1.5rem;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  font-family: 'Poppins', sans-serif;
 }
 
-.modal-title {
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.modal-header h2 {
+  color: #6A7BA2;
+  font-size: 2rem;
+  margin: 0;
+  -webkit-text-stroke: 1px black;
+}
+
+.close-btn {
   font-size: 1.5rem;
-  margin-bottom: 10px;
+  background: #FF6B6B;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  background: #FF3B3B;
+  transform: scale(1.1);
+}
+
+.booking-container {
+  background: linear-gradient(to bottom, #6A7BA2, #4F5D7A);
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.booking-container p {
+  color: #FFDFDE;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.booking-container span {
+  font-weight: normal;
+  color: #FFEFEF;
 }
 
 .engineer-list {
   list-style: none;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
 }
 
 .engineer-item {
   display: flex;
   justify-content: space-between;
-  margin: 5px 0;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  background: #7C89B0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.engineer-item:hover {
+  transform: scale(1.02);
+  background: #8597C2;
+}
+
+.engineer-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.engineer-photo-small {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 .book-btn {
-  background: #00b894;
+  background: #FF6B6B;
   color: white;
-  padding: 5px 10px;
-  border-radius: 6px;
+  padding: 0.4rem 1rem;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-.close-btn {
-  margin-top: 15px;
-  background: #d63031;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 6px;
+.book-btn:hover {
+  background: #FF3B3B;
+  transform: scale(1.05);
+}
+
+.booking-container p:last-child {
+  font-size: 1rem;
+  font-style: italic;
+  color: #FFD9D9;
 }

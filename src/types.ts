@@ -1,6 +1,7 @@
 export type User = {
   id: number;
-  name: string;  
+  name: string;
+  photo: string;
 };
 
 export type TimeSlot = {

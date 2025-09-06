@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Calendar.css";
 import type { User, TimeSlot } from "../types";
-import { useState } from "react";
-import BookingModal from "./BookingModal.tsx"
+import BookingModal from "./BookingModal.tsx";
 
 const days = ["Mon", "Tue", "Wed", "Thu", "Fri"];
 
@@ -26,12 +25,34 @@ type CalendarProps = {
     React.SetStateAction<Record<number, TimeSlot[]>>
   >;
   hoveredEngineer: number | null;
-  candidates: User[];
+  bookings: {
+    candidateId: number;
+    engineer: User;
+    day: string;
+    time: string;
+  }[];
+  setBookings: React.Dispatch<
+    React.SetStateAction<
+      {
+        candidateId: number;
+        engineer: User;
+        day: string;
+        time: string;
+      }[]
+    >
+  >;
   engineers: User[];
 };
 
-const Calendar: React.FC<CalendarProps> = ({ hoveredEngineer, selectedCandidate, candidateAvailability, engineerAvailability, engineers, setEngineerAvailability }) => {
-  
+const Calendar: React.FC<CalendarProps> = ({
+  hoveredEngineer,
+  selectedCandidate,
+  candidateAvailability,
+  engineerAvailability,
+  engineers,
+  setEngineerAvailability,
+  setBookings,
+}) => {
   const slots = generateTimeSlots();
   const [bookingModal, setBookingModal] = useState<{
     day: string;
@@ -41,30 +62,31 @@ const Calendar: React.FC<CalendarProps> = ({ hoveredEngineer, selectedCandidate,
   } | null>(null);
 
   const handleSlotClick = (day: string, time: string) => {
-    if (!selectedCandidate) return;
-  
-    // Check if candidate is available at this slot
+    if (!selectedCandidate) {
+      alert("Please select a candidate.");
+      return;
+    }
+
     const candidateAvailable = (candidateAvailability[selectedCandidate.id] || []).some(
       (slot) => slot.day === day && slot.time === time
     );
-  
+
     if (!candidateAvailable) {
       alert(`${selectedCandidate.name} is not available at this time.`);
       return;
     }
-  
-    // Collect engineers who are ALSO available at this slot
+
     const availableEngineers = engineers.filter((engineer) =>
       (engineerAvailability[engineer.id] || []).some(
         (slot) => slot.day === day && slot.time === time
       )
     );
-  
+
     if (availableEngineers.length === 0) {
       alert("No engineers are available at this time.");
       return;
     }
-  
+
     setBookingModal({
       day,
       time,
@@ -75,15 +97,17 @@ const Calendar: React.FC<CalendarProps> = ({ hoveredEngineer, selectedCandidate,
 
   return (
     <div className="calendar">
-      {/* Header */}
+
       <div className="calendar-header-row">
         <div className="calendar-header top-left" />
         {days.map((day) => (
-          <div key={day} className="calendar-header">{day}</div>
+          <div key={day} className="calendar-header">
+            {day}
+          </div>
         ))}
       </div>
 
-      {/* Time slot rows */}
+      {/* Time slots */}
       {slots.map((time) => (
         <div className="calendar-row" key={time}>
           <div className="time-label">{time}</div>
@@ -131,27 +155,30 @@ const Calendar: React.FC<CalendarProps> = ({ hoveredEngineer, selectedCandidate,
           availableEngineers={bookingModal.availableEngineers}
           onClose={() => setBookingModal(null)}
           onBook={(engineer) => {
-            // Remove this slot from the engineer's availability
             setEngineerAvailability((prev) => {
               const updated = { ...prev };
               updated[engineer.id] = (updated[engineer.id] || []).filter(
-                (slot) =>
-                  !(slot.day === bookingModal.day && slot.time === bookingModal.time)
+                (slot) => !(slot.day === bookingModal.day && slot.time === bookingModal.time)
               );
               return updated;
             });
 
-            alert(
-              `Interview booked for ${bookingModal.day} ${bookingModal.time} with ${bookingModal.candidate.name} and ${engineer.name}`
-            );
+            setBookings((prev) => [
+              ...prev,
+              {
+                candidateId: bookingModal.candidate.id,
+                engineer,
+                day: bookingModal.day,
+                time: bookingModal.time,
+              },
+            ]);
 
             setBookingModal(null);
           }}
         />
       )}
-
     </div>
   );
-};   
+};
 
 export default Calendar;
