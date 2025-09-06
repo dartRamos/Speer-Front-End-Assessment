@@ -7,7 +7,7 @@
 .sidebar {
   width: 40%;
   padding: 1rem;
-  background: linear-gradient(360deg, #FFBFBF, #FFDFDE);
+  background: linear-gradient(360deg, #FFDFDE, #FFBFBF);
 }
 
 .calendar-container {
