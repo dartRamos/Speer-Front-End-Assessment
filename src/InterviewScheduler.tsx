@@ -95,6 +95,7 @@ const InterviewScheduler: React.FC = () => {
       { day: "Fri", time: "15:00" },
     ],
   });
+
   const [bookings, setBookings] = useState<{
     candidateId: number;
     engineer: User;
@@ -214,18 +215,17 @@ const InterviewScheduler: React.FC = () => {
 
       </div>
   
-      {/* Calendar */}
       <div className="calendar-container">
-      <Calendar
-        selectedCandidate={selectedCandidate}
-        candidateAvailability={candidateAvailability}
-        engineerAvailability={engineerAvailability}
-        setEngineerAvailability={setEngineerAvailability}
-        hoveredEngineer={hoveredEngineer}
-        engineers={engineers}
-        setBookings={setBookings}
-        bookings={bookings}
-      />
+        <Calendar
+          selectedCandidate={selectedCandidate}
+          candidateAvailability={candidateAvailability}
+          engineerAvailability={engineerAvailability}
+          setEngineerAvailability={setEngineerAvailability}
+          hoveredEngineer={hoveredEngineer}
+          engineers={engineers}
+          setBookings={setBookings}
+          bookings={bookings}
+        />
       </div>
     </div>
   );
